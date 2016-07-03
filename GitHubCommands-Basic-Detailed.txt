@@ -1,0 +1,110 @@
+saluja@Phoenix MINGW64 /c
+$ pwd
+/c
+
+saluja@Phoenix MINGW64 /c
+$ mkdir DSGitRepository
+
+saluja@Phoenix MINGW64 /c
+$ cd DSGitRepository
+
+saluja@Phoenix MINGW64 /c/DSGitRepository
+$ git version
+git version 2.9.0.windows.1
+
+saluja@Phoenix MINGW64 /c/DSGitRepository
+$ git config --global user.name "rahul-saluja"
+
+saluja@Phoenix MINGW64 /c/DSGitRepository
+$ git config --global user.email "rahul.saluja@outlook.com"
+
+saluja@Phoenix MINGW64 /c/DSGitRepository
+$ git config --global --list
+user.name=rahul-saluja
+user.email=rahul.saluja@outlook.com
+
+Following Git command clones the repository created online (ds-learning) to desktop
+saluja@Phoenix MINGW64 /c/DSGitRepository
+git clone https://github.com/rahul-saluja/ds-learning.git
+
+
+
+Checking connectivity... done.
+
+saluja@Phoenix MINGW64 /c/DSGitRepository
+$ cd ds-learning/
+
+saluja@Phoenix MINGW64 /c/DSGitRepository/ds-learning (master)
+$ ls -ltr
+total 1
+-rw-r--r-- 1 saluja 197121 55 Jul  3 21:00 README.md
+
+saluja@Phoenix MINGW64 /c/DSGitRepository/ds-learning (master)
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working directory clean
+
+
+saluja@Phoenix MINGW64 /c/DSGitRepository/ds-learning (master)
+$ echo "Test Git" >> start.txt
+
+saluja@Phoenix MINGW64 /c/DSGitRepository/ds-learning (master)
+$ ls
+README.md  start.txt
+
+saluja@Phoenix MINGW64 /c/DSGitRepository/ds-learning (master)
+$ cat start.txt
+Test Git
+
+saluja@Phoenix MINGW64 /c/DSGitRepository/ds-learning (master)
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        start.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+Following command newly created file to staging area
+saluja@Phoenix MINGW64 /c/DSGitRepository/ds-learning (master)
+$ git add start.txt
+
+saluja@Phoenix MINGW64 /c/DSGitRepository/ds-learning (master)
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   start.txt
+
+
+saluja@Phoenix MINGW64 /c/DSGitRepository/ds-learning (master)
+$ git commit -m "Adding text file"
+[master c1c0b37] Adding text file
+ 1 file changed, 1 insertion(+)
+ create mode 100644 start.txt
+
+saluja@Phoenix MINGW64 /c/DSGitRepository/ds-learning (master)
+$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+nothing to commit, working directory clean
+
+saluja@Phoenix MINGW64 /c/DSGitRepository/ds-learning (master)
+$ git push origin master
+Username for 'https://github.com': rahul-saluja
+Counting objects: 3, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 292 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/rahul-saluja/ds-learning.git
+   b93e523..c1c0b37  master -> master
+
+saluja@Phoenix MINGW64 /c/DSGitRepository/ds-learning (master)
+$

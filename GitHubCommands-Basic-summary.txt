@@ -1,0 +1,25 @@
+Add to local staging area
+1)git add  start.txt
+
+comitting to Local Repository
+2)git commit -m "Adding text file"
+[master c1c0b37] Adding text file
+ 1 file changed, 1 insertion(+)
+ create mode 100644 start.txt
+ 
+ 3)git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+nothing to commit, working directory clean
+
+comitting to Remote Repository
+4)git push origin master
+Username for 'https://github.com': rahul-saluja
+Counting objects: 3, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 292 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/rahul-saluja/ds-learning.git
+   b93e523..c1c0b37  master -> master
