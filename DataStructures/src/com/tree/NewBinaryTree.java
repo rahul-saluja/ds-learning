@@ -140,85 +140,9 @@ public class NewBinaryTree<D extends Comparable<? super D>> {
 		
 		return result;
 		
-		/*// find the node of data passed in
-		NewNode<D> deleteNode = recursiveSearch(getRootNode(),
-				NewNode.valueOf(dataOfNodeTobeDeleted));
-
-		if (deleteNode == null) {
-			return null;
-		}
-
-		NewNode<D> holdNode;
-
-		*//**
-		 * case c , when @link{deleteNode} will have both left and right child
-		 * we handle case c first as it will be transformed into case a or case
-		 * b
-		 *//*
-
-		if (deleteNode.getLeftChild() != null
-				&& deleteNode.getRightChild() != null) {
-			holdNode = findInorderPredecessorNode(deleteNode);
-			deleteNode.setData(holdNode.getData());
-			//fall through case a or b
-			deleteNode = holdNode;
-
-		}
-
-		*//**
-		 * case a , when @link{deleteNode} will be a leaf node and both left and
-		 * right child are null.
-		 *//*
-		if (deleteNode.getLeftChild() == null
-				&& deleteNode.getRightChild() == null) {
-			//deleteHere(deleteNode, null);
-			 valueTobeRetured =deleteNode.getData();
-			 deleteNode.clear();
-			return (NewNode<D>) valueTobeRetured; 
-		}
-		
-		*//**
-		 * case c , when @link{deleteNode}  has either of  one childNode
-		 *//*
-		if (deleteNode.getRightChild() != null) {
-			holdNode = deleteNode.getRightChild(); 
-			deleteNode.setRightChild(null);
-			}else{
-				holdNode = deleteNode.getLeftChild(); 
-				deleteNode.setLeftChild(null);
-			}
-			
-		//deleteHere(deleteNode, holdNode);
-			if(rootNode ==deleteNode){
-				rootNode = holdNode;
-			}
-			
-			 valueTobeRetured =deleteNode.getData();
-			 deleteNode.clear();
-			return deleteNode;
-*/		}
-//	}
+	}
 	
 	
-	/*private void deleteHere(NewNode<D> nodeTobeDeleted, NewNode<D> nodeTobeAttached){
-		
-		//nodeTobeDeleted has only one subtree node i.e nodeTobeAttached (which is to be attached to parent of nodeTobeDeleted )
-		
-		NewNode<D> parentOfNodeTobeDeleted = nodeTobeDeleted.getParentNode();
-		if(parentOfNodeTobeDeleted==null){
-			return;
-		}
-		//if node to be deleted is left child of its parent
-		if(nodeTobeDeleted == parentOfNodeTobeDeleted.getLeftChild()){
-			//atach as left subtree
-			parentOfNodeTobeDeleted.setLeftChild(null);
-			parentOfNodeTobeDeleted.setLeftChild(nodeTobeAttached);
-			return;
-		}
-		//if node to be deleted is right child of its parent		
-		parentOfNodeTobeDeleted.setRightChild(null);
-		parentOfNodeTobeDeleted.setRightChild(nodeTobeAttached);
-	}*/
 	
 	
 /**

@@ -14,39 +14,6 @@ public class TestList {
 		list.insertAtLast(12);
 		list.insertAtLast(13);
 		list.insertAtLast(14);
-		//list.insertAtLast(15);
-		/*list.insertAtLast(16);
-		list.insertAtLast(17);*/
-		
-		//System.out.println(3%2);
-		
-		
-		
-/*MergeSortList<Integer> mSort = new MergeSortList<Integer>();
-		
-		Node<Integer> frontStart= null;
-		Node<Integer> backStart= null;
-		System.out.println(mSort.splitList(list.getFirst(), frontStart, backStart).getData() +""  + backStart.getData());
-		System.out.println();*/
-//		System.out.println(list);
-		
-		//list.display();
-		/*list.delete(14);
-		System.out.println("After delete");
-		list.display();*/
-		
-		//System.out.println(list.findMiddleNode().getData());
-		
-		
-		
-		/*Integer int12 = new Integer(12);
-		Integer int121 = new Integer(12);
-		System.out.println(int12.hashCode()  + "    "  + int121.hashCode());
-		Node <Integer> node1 = Node.valueOf(12);
-		Node <Integer> node2 = Node.valueOf(12);
-		System.out.println(node1==node2  );
-*/		//System.out.println(node2   );
-		
 
 	}
 	
