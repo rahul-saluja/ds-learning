@@ -84,17 +84,6 @@ public class TestList {
 		
 		list.recursiveReverseList(list.getFirst());
 		list.display();
-//		Node<Integer> reversedListHead = list.reverserecursiveList(list.getFirst());
-		
-		/*reversedListHead*/
-		
-		/*list.copyList(reversedListHead);
-		assertEquals(16,reversedListHead.getData().intValue());
-		
-		SinglyLinkList<Integer> reversedList = list.copyList(reversedListHead);
-		reversedList.display();*/
-		/*Node<Integer> doublereversedListHead =reversedList.reverseList(reversedList.getFirst());
-		list.copyList(doublereversedListHead).display();*/
 		
 		
 	}

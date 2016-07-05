@@ -1,5 +1,6 @@
 package com.tree;
 
+import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -485,37 +486,135 @@ public  void inOrderTraversal(NewNode<D> rootNode){
 			}
 	}
 
+/*
+ * Using two Stacks
+ * Traverse everything on left Sub tree
+ * Traverse everything on right Sub tree
+ * Visit the Root Node
+ * */
 
+	public void postOrderTraversal(NewNode<D> rootNode) {
 
-public void postOrderTraversal(NewNode<D> rootNode){
-	
-	if(rootNode==null)
-		return;
-	Stack<NewNode <D>> stack1 = new Stack<NewNode<D>>();
-	Stack<NewNode <D>> stack2 = new Stack<NewNode<D>>();
-	stack1.push(rootNode);
-	
-	while(!stack1.isEmpty()){
-		 rootNode = stack1.pop();
-		 
-		 stack2.push(rootNode);
-		 
-		 if(rootNode.getLeftChild()!=null){
-			 stack1.push(rootNode.getLeftChild());
-		 }
-		 if(rootNode.getRightChild()!=null){
-			 stack1.push(rootNode.getRightChild());
-		 }
-		 
+		if (rootNode == null)
+			return;
+		Stack<NewNode<D>> stack1 = new Stack<NewNode<D>>();
+		Stack<NewNode<D>> stack2 = new Stack<NewNode<D>>();
+		stack1.push(rootNode);
+
+		while (!stack1.isEmpty()) {
+			rootNode = stack1.pop();
+
+			stack2.push(rootNode);
+
+			if (rootNode.getLeftChild() != null) {
+				stack1.push(rootNode.getLeftChild());
+			}
+			if (rootNode.getRightChild() != null) {
+				stack1.push(rootNode.getRightChild());
+			}
+
+		}
+
+		System.out.println("Postorder");
+
+		while (!stack2.isEmpty()) {
+			System.out.println(stack2.pop().getData());
+		}
+
 	}
 	
-	System.out.println("Postorder");
+	/*
+	 * Using one Stack and a auxiliary variable "current" which will point to root node in beginning
+	 * Traverse everything on left Sub tree
+	 * Traverse everything on right Sub tree
+	 * Visit the Root Node
+	 * */
 	
-	while(!stack2.isEmpty()){
-		System.out.println(stack2.pop().getData());
+	
+	public void postOrderTraversalUsingOneStack(NewNode<D> rootNode) {
+
+		NewNode<D> current = rootNode;
+		if (current == null)
+			return;
+		Deque<NewNode<D>> stack = new LinkedList<NewNode<D>>();
+
+		// While current is not equal to null
+
+		while (current != null || !stack.isEmpty()) {
+
+			if (current != null) {
+				stack.addFirst(current);
+				current = current.getLeftChild();
+			} else {
+				// "current" variable could be pointing to null but
+				// stack is not empty see what is the available
+				// at the top of stack and get get the right child of that node
+				NewNode<D> tempNode = stack.peek().getRightChild();
+
+				// if right child of the node currently at top of stack is null
+				if (tempNode == null) {
+					// take the node out of the of stack and print it
+					tempNode = stack.poll();
+					System.out.println(tempNode.getData());
+
+					// we will come to this loop even if
+					// TempRightOfTopOfTheStack is not null
+					// Now continue to next step
+					// 1)check if stack is not empty
+					// 2)and we are pointing to right child of whatever is
+					//   currently at top of stack
+					//point 2 is more of a check to verify that whatever is 
+					//currently at top of stack might have right subtree
+					//to explore
+					while (!stack.isEmpty()
+							&& tempNode.getData().compareTo(stack.peek().getRightChild().getData()) == 0) {
+						tempNode = stack.poll();
+						System.out.println(tempNode.getData());
+					}
+				}else{
+					// we will come here when in last iteration
+					//we reached the while loop 
+					//of if (tempNode==null) code block
+					// and at that point second condition
+					//of while loop must have evaluated
+					// to false as we have right sub tree to 
+					//explore of stacks top element's right
+					// and we make that right element as current
+					current= tempNode;	
+				}
+
+			}
+
+		}
+
 	}
 	
-}
+	public boolean isSameTree(NewNode<D> root1,NewNode<D> root2){
+		
+		if(root1==null && root2==null){
+			return true;
+		}
+		if(root1==null || root2 == null)
+		{
+			return false;
+		}
+		return root1.getData().compareTo(root2.getData())==0&&isSameTree(root1.getLeftChild(), root2.getLeftChild())
+				&&isSameTree(root1.getRightChild(),root2.getRightChild());
+		
+	}
+	
+	public int sizeOftree(NewNode<D> root){
+		
+		if(root==null){
+			return 0;
+		}
+		
+		int leftSize = sizeOftree(root.getLeftChild());
+		int righttSize = sizeOftree(root.getRightChild());
+		return leftSize+ righttSize+1;
+		
+	}
+	
 }
 
 
