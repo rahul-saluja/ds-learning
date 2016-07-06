@@ -46,9 +46,12 @@ public class NewBinaryTree<D extends Comparable<? super D>> {
 		binaryTree.recursiveInsert(Integer.valueOf(13));
 		binaryTree.iterativeInsertNode((binaryTree.getNode(Integer.valueOf(17))));
 		
-		binaryTree.preOrderTraversal(binaryTree.getRootNode());
+		//binaryTree.preOrderTraversal(binaryTree.getRootNode());
 		binaryTree.inOrderTraversal(binaryTree.getRootNode());
-		binaryTree.postOrderTraversal(binaryTree.getRootNode());
+		
+		System.out.println("inorder predecessor-->"+binaryTree.findInorderPredecessorNode(binaryTree.getRootNode()));
+		binaryTree.morrisInorder(binaryTree.getRootNode());
+		//binaryTree.postOrderTraversal(binaryTree.getRootNode());
 		/*System.out.println("Print Tree" +binaryTree.getRootNode());
 		
 		
@@ -615,6 +618,44 @@ public  void inOrderTraversal(NewNode<D> rootNode){
 		
 	}
 	
+	/*http://www.geekviewpoint.com/java/bst/morris_in_order*/
+	public void morrisInorder(NewNode<D> root) {
+		
+		if (root == null) {
+            return;
+        }
+		NewNode<D> current = root;
+		
+        while(current != null) {
+            //left is null then print the node and go to right
+            if (current.getLeftChild() == null) {
+                System.out.print(current.getData() + " ");
+                current = current.getRightChild();
+            }
+            else {
+                //find the  inorder predecessor.
+            	NewNode<D> predecessor = current.getLeftChild();
+                
+            	 //keep finding the predecessor but also check 
+            	//that we are 
+                 while (null !=predecessor.getRightChild()  && !current.equals(predecessor.getRightChild())) {
+                     predecessor = predecessor.getRightChild();
+                 }
+            	//if right node is null then go left 
+            	//after establishing link from predecessor to current.
+                if(predecessor.getRightChild() == null){
+                    predecessor.setRightChild(current); 
+                    current = current.getLeftChild();
+                } else{
+                //left is already visit. Go rigth after visiting current.
+                System.out.print(current.getData() + " ");
+                predecessor.setRightChild(null);
+                
+                    current = current.getRightChild();
+                }
+            }
+        }
+}
 }
 
 
