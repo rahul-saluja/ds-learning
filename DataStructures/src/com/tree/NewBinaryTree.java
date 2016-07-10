@@ -50,7 +50,13 @@ public class NewBinaryTree<D extends Comparable<? super D>> {
 		binaryTree.inOrderTraversal(binaryTree.getRootNode());
 		
 		System.out.println("inorder predecessor-->"+binaryTree.findInorderPredecessorNode(binaryTree.getRootNode()));
+		
+		System.out.println(" Morris Inorder traversal. i.e Inorder Traversal without using stack or recursion");
+		
 		binaryTree.morrisInorder(binaryTree.getRootNode());
+		
+		System.out.println("level order traversal");
+		binaryTree.levelOrderTraversal(binaryTree.getRootNode());
 		//binaryTree.postOrderTraversal(binaryTree.getRootNode());
 		/*System.out.println("Print Tree" +binaryTree.getRootNode());
 		
@@ -620,42 +626,70 @@ public  void inOrderTraversal(NewNode<D> rootNode){
 	
 	/*http://www.geekviewpoint.com/java/bst/morris_in_order*/
 	public void morrisInorder(NewNode<D> root) {
-		
+
 		if (root == null) {
-            return;
-        }
+			return;
+		}
 		NewNode<D> current = root;
+
+		while (current != null) {
+			// left is null then print the node and go to right
+			if (current.getLeftChild() == null) {
+				System.out.print(current.getData() + " ");
+				current = current.getRightChild();
+			} else {
+				// find the inorder predecessor.
+				NewNode<D> predecessor = current.getLeftChild();
+
+				// keep finding the predecessor but also check
+				// that we are not going in continuous loop
+				// of reaching the node as predecessor, which have already been
+				// visited
+				while (null != predecessor.getRightChild() && !current.equals(predecessor.getRightChild())) {
+					predecessor = predecessor.getRightChild();
+				}
+				// if right node is null then go left
+				// after establishing link from predecessor to current.
+				if (predecessor.getRightChild() == null) {
+					predecessor.setRightChild(current);
+					current = current.getLeftChild();
+				} else {
+					// left is already visit. Go rigth after visiting current.
+					System.out.print(current.getData() + " ");
+					predecessor.setRightChild(null);
+
+					current = current.getRightChild();
+				}
+			}
+		}
+	}
+	
+	
+	/*print level order data from left to right*/
+	public void levelOrderTraversal(NewNode<D> root){
+		if(root==null)
+			return;
 		
-        while(current != null) {
-            //left is null then print the node and go to right
-            if (current.getLeftChild() == null) {
-                System.out.print(current.getData() + " ");
-                current = current.getRightChild();
-            }
-            else {
-                //find the  inorder predecessor.
-            	NewNode<D> predecessor = current.getLeftChild();
-                
-            	 //keep finding the predecessor but also check 
-            	//that we are 
-                 while (null !=predecessor.getRightChild()  && !current.equals(predecessor.getRightChild())) {
-                     predecessor = predecessor.getRightChild();
-                 }
-            	//if right node is null then go left 
-            	//after establishing link from predecessor to current.
-                if(predecessor.getRightChild() == null){
-                    predecessor.setRightChild(current); 
-                    current = current.getLeftChild();
-                } else{
-                //left is already visit. Go rigth after visiting current.
-                System.out.print(current.getData() + " ");
-                predecessor.setRightChild(null);
-                
-                    current = current.getRightChild();
-                }
-            }
-        }
-}
+		Queue<NewNode<D>> queue = new LinkedList<NewNode<D>>();
+		queue.offer(root);
+		
+		while(!queue.isEmpty()){
+			NewNode<D> current = queue.poll();
+			
+			if(current!=null){
+				
+				if(current.getLeftChild()!=null){
+					queue.offer(current.getLeftChild());
+				}
+				if(current.getRightChild()!=null){
+					queue.offer(current.getRightChild());
+				}
+				System.out.println(current.getData());
+			}
+		}
+		
+	}
+	
 }
 
 
