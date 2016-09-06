@@ -164,7 +164,7 @@ public class NewNode<D extends Comparable<? super D>> {
 																		// both
 																		// childs
 				//Find the Inorder successor
-				this.setData(this.getRightChild().getMinValueIterative());// get
+				this.setData(this.getRightChild().getMinValue());// get
 																			// the
 																			// minimum
 																			// value
@@ -208,7 +208,9 @@ public class NewNode<D extends Comparable<? super D>> {
 
 	public boolean add(D valueTobeInserted) {
 
+		//preventing duplicate entries
 		if (this.getData().compareTo(valueTobeInserted) == 0) {
+			System.out.println("Duplicate insertion values tried , we will not allow duplicate values hence returning false ");
 			return false;
 		}
 		if (this.getData().compareTo(valueTobeInserted) > 0) {

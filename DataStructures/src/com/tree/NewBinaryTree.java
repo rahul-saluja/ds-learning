@@ -39,11 +39,11 @@ public class NewBinaryTree<D extends Comparable<? super D>> {
 		NewBinaryTree <Integer> binaryTree = new NewBinaryTree<Integer>();
 		
 		binaryTree.iterativeInsertNode((binaryTree.getNode(Integer.valueOf(12))));
-		binaryTree.recursiveInsert(Integer.valueOf(5));
+		binaryTree.recursiveInsertNode(Integer.valueOf(5));
 		binaryTree.iterativeInsertNode((binaryTree.getNode(Integer.valueOf(15))));
-		binaryTree.recursiveInsert(Integer.valueOf(3));
+		binaryTree.recursiveInsertNode(Integer.valueOf(3));
 		binaryTree.iterativeInsertNode((binaryTree.getNode(Integer.valueOf(7))));
-		binaryTree.recursiveInsert(Integer.valueOf(13));
+		binaryTree.recursiveInsertNode(Integer.valueOf(13));
 		binaryTree.iterativeInsertNode((binaryTree.getNode(Integer.valueOf(17))));
 		
 		//binaryTree.preOrderTraversal(binaryTree.getRootNode());
@@ -57,6 +57,7 @@ public class NewBinaryTree<D extends Comparable<? super D>> {
 		
 		System.out.println("level order traversal");
 		binaryTree.levelOrderTraversal(binaryTree.getRootNode());
+		System.out.println((binaryTree.iterativeSearch(binaryTree.getNode(Integer.valueOf(3)))));
 		//binaryTree.postOrderTraversal(binaryTree.getRootNode());
 		/*System.out.println("Print Tree" +binaryTree.getRootNode());
 		
@@ -83,7 +84,7 @@ public class NewBinaryTree<D extends Comparable<? super D>> {
 	}
 	
 	
-	private boolean  recursiveInsert(D valueTobeInserted) {
+	private boolean  recursiveInsertNode(D valueTobeInserted) {
 		//check if node been passed is null 
 		
 		if (null == valueTobeInserted ) {
@@ -102,13 +103,35 @@ public class NewBinaryTree<D extends Comparable<? super D>> {
 	}
 
 
-	private boolean recursiveSearch(NewNode<D> nodeTobeSearched) {
+	public boolean recursiveDeleteNode(D dataOfNodeTobeDeleted) {
+		boolean result = false;
+		if (getRootNode() == null) {
+
+			return false;
+		}
+		if(dataOfNodeTobeDeleted.compareTo(getRootNode().getData())==0) //root node to be deleted
+		{
+			NewNode<D> auxilaryNode =getNode(); //just creating a temporaryNode
+			auxilaryNode.setLeftChild(getRootNode());
+			 result =getRootNode().removeNode(dataOfNodeTobeDeleted, auxilaryNode);
+			this.setRootNode(auxilaryNode.getLeftChild());
+			return result;
+		}else{
+			result =getRootNode().removeNode(dataOfNodeTobeDeleted, null);
+		}
+		
+		return result;
+		
+	}
+	
+	
+	/*private boolean recursiveSearch(NewNode<D> nodeTobeSearched) {
 
 		NewNode<D> currentNode = getRootNode();
 		return currentNode.search(nodeTobeSearched.getData());
 
 	}
-	
+	*/
 	/*private NewNode<D> recursiveNodeSearch(NewNode<D> nodeTobeSearched) {
 
 		NewNode<D> currentNode = getRootNode();
@@ -131,26 +154,7 @@ public class NewBinaryTree<D extends Comparable<? super D>> {
 
 
 
-	public boolean deleteNode(D dataOfNodeTobeDeleted) {
-		boolean result = false;
-		if (getRootNode() == null) {
-
-			return false;
-		}
-		if(dataOfNodeTobeDeleted.compareTo(getRootNode().getData())==0) //root node to be deleted
-		{
-			NewNode<D> auxilaryNode =getNode(); //just creating a temporaryNode
-			auxilaryNode.setLeftChild(getRootNode());
-			 result =getRootNode().removeNode(dataOfNodeTobeDeleted, auxilaryNode);
-			this.setRootNode(auxilaryNode.getLeftChild());
-			return result;
-		}else{
-			result =getRootNode().removeNode(dataOfNodeTobeDeleted, null);
-		}
-		
-		return result;
-		
-	}
+	
 	
 	
 	
@@ -221,8 +225,8 @@ private boolean iterativeInsertNode(NewNode<D> node) {
 	
 	
 	while (currentRootNode != null) {
-		if (currentRootNode.getData().compareTo(node.getData()) > 0) {
-			if (currentRootNode.getLeftChild() == null) {
+		if (currentRootNode.getData().compareTo(node.getData()) > 0) { //new node to be added is smaller than root node
+			if (currentRootNode.getLeftChild() == null) {//root node left child is null
 				currentRootNode.setLeftChild(node);
 				node.setParentNode(currentRootNode);
 				return true;
@@ -688,6 +692,89 @@ public  void inOrderTraversal(NewNode<D> rootNode){
 			}
 		}
 		
+	}
+	
+	
+	 /**
+	  * first to detect the target node, but keep searching until we reach the leaf node, In this way, 
+	  * we find target's successor, and then we replace the target node value with its successor value,
+	  * and then we delete its successor.
+	  * */
+	
+	public boolean  iterativeDelete( D  dataToDelete)
+	{
+		
+		
+		 NewNode<D> parent = null;
+		 NewNode<D> child = getRootNode();
+		 NewNode<D> node = getRootNode();
+		 
+		 while (node != null && !(node.getData().compareTo(dataToDelete)==0)){
+		        parent = node;
+		        if (dataToDelete.compareTo(node.getData()) < 0)
+		            node = node.getLeftChild(); //Scan left
+		        else
+		            node = node.getRightChild(); //Scan right
+		    }
+		     
+		    if (node == null)
+		        return false; //dataToDelete is not present in tree
+		     
+		    //key found, work with their children
+		    if (node.getLeftChild() == null && node.getRightChild() == null){ //Leaf Node to be deleted
+		        if (parent == null){
+		            rootNode = null;// case where node to deleted is the root of tree with no children
+		            return true;
+		        }
+		        else if (dataToDelete.compareTo(parent.getData()) < 0)// Node to be deleted is left child of its parent and is a leaf node
+		        {
+		            parent.setLeftChild(null);
+		            return true;
+		        }
+		        else{
+		        	 parent.setRightChild(null);// Node to be deleted is right child of its parent and is a leaf node
+		        	 return true;
+		        }
+		    }else if (node.getLeftChild() == null){ //Node to be deleted is a parent of node with right child 
+		    			 child = node.getRightChild();	// get right child
+		    			 swapValues(node, child); // swap values of right child to parent
+		    			 node.setLeftChild(child.getLeftChild());// set right child's left children to its parent
+		    			 node.setRightChild(child.getRightChild()); // set right child's right children to its parent
+		    			 child.clear();
+		    			 return true;
+		    }else if (node.getRightChild() == null){ //If right child is null, get left child
+		        child = node.getLeftChild();
+		         swapValues(node, child);
+				 node.setLeftChild(child.getLeftChild());// set Left child's left children to its parent
+    			 node.setRightChild(child.getRightChild()); // set Left child's right children to its parent
+    			 child.clear();
+    			 return true;
+		    }else{ //If two children
+		        child = node.getLeftChild();
+		        parent = null;
+		        while (child.getRightChild() != null){
+		            parent = child;
+		            child = parent.getRightChild();
+		        }
+		        if (parent == null){
+		            swapValues(node, child);
+		            node.setLeftChild(child.getLeftChild());
+		            return true;
+		        }else{
+		            swapValues(node, child);
+		            parent.setRightChild(child.getLeftChild());
+		            return true;
+		        }
+		    }
+		
+		
+	}
+	
+	
+	private void swapValues(NewNode<D> parentNode, NewNode<D>  child){
+	    D temp = parentNode.getData();
+	    parentNode.setData(child.getData()); ;
+	    child.setData(temp);      
 	}
 	
 }
